@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+</head>
+
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="logo.png"></a>
+            <div class="nav-links" id="navLinks">
+
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="Base de données.html">Base de données</a></li>
+                    <li><a href="A propos.html">A propos</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!---Contact --->
+
+
+
+        <section id="contact">
+            <div class="container">
+                <div class="title">
+                    <h6>Une question ? Un conseil ?</h6>
+                    <h3>Contactez-nous !</h3>
+                </div>
+                <form onsubmit="sendEmail(); reset(); return false;">
+                    <input type="text" id="name" placeholder="Entrez votre nom..." required="">
+                    <input type="text" id="email" placeholder="Entrez votre e-mail..." required="">
+                    <input type="text" id="subject" placeholder="Entrez le sujet..." required="">
+                    <textarea id="message" placeholder="Entrez votre message.." required=""></textarea>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
+        </section>
+
+
+    </section>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script>
+        function sendEmail() {
+            Email.send({
+                Host: "smtp.gmail.com",
+                Username: "mohaall94400@gmail.com",
+                Password: "sxtracqvnzkomdeo",
+                To: 'mohaall94400@gmail.com',
+                From: document.getElementById("email").value,
+                Subject: "Nouveau message venant du site d'Audit Energétique",
+                Body: "Name: " + document.getElementById("name").value +
+                    "<br> Email: " + document.getElementById("email").value +
+                    "<br> Sujet: " + document.getElementById("subject").value +
+                    "<br> Message: " + document.getElementById("message").value
+            }).then(
+                message => alert(message)
+            );
+        }
+    </script>
+</body>
+
+</html>

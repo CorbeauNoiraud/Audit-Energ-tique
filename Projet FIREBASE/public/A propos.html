@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>A propos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <!-- include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+        // Replace with your app config object
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrpP4QrqDiwoZ6Q1Jzryo7_BZKaPB5xRg",
+            authDomain: "auditenfin.firebaseapp.com",
+            databaseURL: "https://auditenfin-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "auditenfin",
+            storageBucket: "auditenfin.appspot.com",
+            messagingSenderId: "971011388656",
+            appId: "1:971011388656:web:01e04a24ab97fe5878be35",
+        };
+
+        // Initialize firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Make auth and database references
+        const auth = firebase.auth();
+        const db = firebase.database();
+    </script>
+
+    <!-- include highchartsjs to build the charts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- include to use jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--include icons from fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- include Gauges Javascript library-->
+    <script src="https://cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"></script>
+    <!--reference for favicon-->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!--reference a stylesheet-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="A propos.html"><img src="logo.png"></a>
+            <div class="nav-links" id="navLinks">
+
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="Base de données.html">Base de données</a></li>
+                    <li><a href="A propos.html">A propos</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <!---A propos --->
+
+        <section class="propos">
+            <h1>Qui sommes-nous ?</h1>
+            <p>Nous sommes un groupe de quatre étudiants en 2nde année de D.U.T. Mesures Physiques à l'I.U.T. de Créteil-Vitry à l'UPEC.
+                <br>Les objectifs de ce site web sont répertoriés ci-dessous :
+                <div class="img">
+                    <img src="logo.png">
+                </div>
+            </p>
+
+
+            <div class="row">
+                <div class="objectif">
+                    <h3>Base de données</h3>
+                    <p style="color:black">Le premier objectif est de créer une base de données à l'aide de Firebase afin de recevoir les données issues des différents capteurs en temps réel et horodatées.</p>
+                </div>
+
+                <div class="objectif">
+                    <h3>Récupération des données</h3>
+                    <p style="color:black">Le second est de récupérer les données issues de la base de données Firebase et de les stocker dans un tableau.</p>
+                </div>
+
+                <div class="objectif">
+                    <h3>Traitement des données</h3>
+                    <p style="color:black">Enfin, le site web a pour but de traiter les données de manière intelligente. Nous avons pour cela mis en place, par exemple, l'envoi d'un mail automatique à l'opérateur lorsque l'on obtient une valeur de Courant supérieure à X Ampères.</p>
+                </div>
+            </div>
+
+        </section>
+        <!------JavaScript for Toggle Menu sur TELEPHONE----->
+        <script>
+            var navLinks = document.getElementById("navLinks");
+
+            function showMenu() {
+                navLinks.style.right = "0";
+            }
+            navLinks.style
+
+            function hideMenu() {
+                navLinks.style.right = "-200px";
+            }
+        </script>
+</body>
+
+</html>

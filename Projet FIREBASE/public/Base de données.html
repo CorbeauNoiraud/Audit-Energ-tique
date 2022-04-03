@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ESP Datalogging Firebase App</title>
+
+    <!-- include Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+        // Replace with your app config object
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrpP4QrqDiwoZ6Q1Jzryo7_BZKaPB5xRg",
+            authDomain: "auditenfin.firebaseapp.com",
+            databaseURL: "https://auditenfin-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "auditenfin",
+            storageBucket: "auditenfin.appspot.com",
+            messagingSenderId: "971011388656",
+            appId: "1:971011388656:web:01e04a24ab97fe5878be35",
+        };
+
+
+        // Initialize firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Make auth and database references
+        const auth = firebase.auth();
+        const db = firebase.database();
+    </script>
+
+    <!-- include highchartsjs to build the charts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- include to use jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--include icons from fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- include Gauges Javascript library-->
+    <script src="https://cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"></script>
+    <!--reference for favicon-->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!--reference a stylesheet-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"><img src="logo.png"></a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="Base de données.html">Base de données</a></li>
+                    <li><a href="A propos.html">A propos</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    </li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1>Base de données</h1>
+        <!--- Base -->
+        <section class="Base">
+
+            <p>Les données reçues par le capteur ainsi que l'horodatage sont regroupées dans le tableau qui suit.</p>
+
+            <!--TOP BAR-->
+            <div class="topnav">
+                <h1>Données issues des capteurs de courant <i class="fas fa-clipboard-list"></i></h1>
+            </div>
+
+            <!--AUTHENTICATION BAR (USER DETAILS/LOGOUT BUTTON)-->
+            <div id="authentication-bar" style="display: none;">
+                <p><span id="authentication-status">Utilisateur connecté :</span>
+                    <span id="user-details">USEREMAIL</span>
+                    <a href="/" id="logout-link">(logout)</a>
+                </p>
+            </div>
+
+            <!--LOGIN FORM-->
+            <form id="login-form" style="display: none;">
+                <div class="form-elements-container">
+                    <label for="input-email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Username" id="input-email" required>
+
+                    <label for="input-password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" id="input-password" required>
+
+                    <button type="submit" id="login-button">Login</button>
+                    <p id="error-message" style="color:red;"></p>
+                </div>
+            </form>
+
+            <!--CONTENT (SENSOR READINGS)-->
+            <div class="content-sign-in" id="content-sign-in" style="display: none;">
+
+                <!--LAST UPDATE-->
+                <p><span class="date-time">Dernière mise à jour: <span id="lastUpdate"></span></span>
+                </p>
+                <p>
+                    Cartes: <input type="checkbox" id="cards-checkbox" name="cards-checkbox" checked> Jauges: <input type="checkbox" id="gauges-checkbox" name="gauges-checkbox" checked> Graphiques: <input type="checkbox" id="charts-checkbox" name="charts-checkbox"
+                        unchecked>
+                </p>
+                <div id="cards-div">
+                    <div class="cards">
+                        <!--TEMPERATURE-->
+                        <div class="card">
+                            <p><i class="fas fa-thermometer-half" style="color:#059e8a;"></i> TEMPERATURE</p>
+                            <p><span class="reading"><span id="temp"></span> &deg;C</span>
+                            </p>
+                        </div>
+                        <!--HUMIDITY-->
+                        <div class="card">
+                            <p><i class="fas fa-bolt" style="color:#00add6;"></i> COURANT </p>
+                            <p><span class="reading"><span id="hum"></span> A</span>
+                            </p>
+                        </div>
+                        <!--PRESSURE-->
+                        <div class="card">
+                            <p><i class="fas fa-bolt" style="color:#e1e437;"></i> COURANT 2</p>
+                            <p><span class="reading"><span id="pres"></span> A</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!--GAUGES-->
+                <div id="gauges-div">
+                    <div class="cards">
+                        <!--TEMPERATURE-->
+                        <div class="card">
+                            <canvas id="gauge-temperature"></canvas>
+                        </div>
+                        <!--HUMIDITY-->
+                        <div class="card">
+                            <canvas id="gauge-courant1"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!--CHARTS-->
+                <div id="charts-div" style="display:none">
+                    <!--SET NUMBER OF READINGS INPUT FIELD-->
+                    <div>
+                        <p> Nombre de points: <input type="number" id="charts-range"></p>
+                    </div>
+                    <!--TEMPERATURE-CHART-->
+                    <div class="cards">
+                        <div class="card">
+                            <p><i class="fas fa-thermometer-half" style="color:#059e8a;"></i> TEMPERATURE CHART</p>
+                            <div id="chart-temperature" class="chart-container"></div>
+                        </div>
+                    </div>
+                    <!--HUMIDITY-CHART-->
+                    <div class="cards">
+                        <div class="card">
+                            <p><i class="fas fa-bolt" style="color:#00add6;"></i> COURANT CHART</p>
+                            <div id="chart-courant1" class="chart-container"></div>
+                        </div>
+                    </div>
+                    <!--PRESSURE-CHART-->
+                    <div class="cards">
+                        <div class="card">
+                            <p><i class="fas fa-bolt" style="color:#e1e437;"></i> COURANT 2 CHART</p>
+                            <div id="chart-courant2" class="chart-container"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--BUTTONS TO HANDLE DATA-->
+                <p>
+                    <!--View data button-->
+                    <button id="view-data-button">Voir toutes les données</button>
+                    <!--Hide data button-->
+                    <button id="hide-data-button" style="display:none;">Cacher les données</button>
+                    <!--Delete data button-->
+                    <button id="delete-button" class="deletebtn">Supprimer les données</button>
+                </p>
+                <!--Modal to delete data-->
+                <div id="delete-modal" class="modal" sytle="display:none">
+                    <span onclick="document.getElementById('delete-modal').style.display='none'" class="close" title="Close Modal">×</span>
+                    <form id="delete-data-form" class="modal-content" action="/">
+                        <div class="container">
+                            <h1>Supprimer les données</h1>
+                            <p>Etes-vous sûr de vouloir supprimer les données de Firebase ?</p>
+                            <div class="clearfix">
+                                <button type="button" onclick="document.getElementById('delete-modal').style.display='none'" class="cancelbtn">Cancel</button>
+                                <button type="submit" onclick="document.getElementById('delete-modal').style.display='none'" class="deletebtn">Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!--TABLE WITH ALL DATA-->
+                <div class="cards">
+                    <div class="card" id="table-container" style="display:none;">
+                        <table id="readings-table">
+                            <tr id="theader">
+                                <th>Timestamp</th>
+                                <th>Temp (ºC)</th>
+                                <th>Courant (A)</th>
+                                <th>Courant 2 (A)</th>
+                            </tr>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                        <p><button id="load-data" style="display:none;">Plus de résultats...</button></p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!--INCLUDE JS FILES-->
+            <script src="scripts/auth.js"></script>
+            <script src="scripts/charts-definition.js"></script>
+            <script src="scripts/gauges-definition.js"></script>
+            <script src="scripts/index.js"></script>
+
+</body>
+
+</html>

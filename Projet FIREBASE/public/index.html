@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title>Projet Tutore : Audit Energetique</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">
+    <!-- include only the Firebase features as you need -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+
+    <script>
+        // Replace with your app config object
+        const firebaseConfig = {
+            apiKey: "AIzaSyDrpP4QrqDiwoZ6Q1Jzryo7_BZKaPB5xRg",
+            authDomain: "auditenfin.firebaseapp.com",
+            databaseURL: "https://auditenfin-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "auditenfin",
+            storageBucket: "auditenfin.appspot.com",
+            messagingSenderId: "971011388656",
+            appId: "1:971011388656:web:01e04a24ab97fe5878be35",
+        };
+
+        // Initialize firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Make auth and database references
+        const auth = firebase.auth();
+        const db = firebase.database();
+    </script>
+
+    <!-- include highchartsjs to build the charts-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <!-- include to use jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--include icons from fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- include Gauges Javascript library-->
+    <script src="https://cdn.rawgit.com/Mikhus/canvas-gauges/gh-pages/download/2.1.7/all/gauge.min.js"></script>
+    <!--reference for favicon-->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <!--reference a stylesheet-->
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+</head>
+
+<body>
+    <section class="header">
+        <nav>
+            <a href="index.html"><img src="logo.png"></a>
+            <div class="nav-links" id="navLinks">
+
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="Base de données.html">Base de données</a></li>
+                    <li><a href="A propos.html">A propos</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+        <div class="text-box">
+            <h1>But du site</h1>
+            <p>Ce site a pour projet de recevoir des données d'un capteur énergétique à partir d'une base de données. Vous pouvez appuyer sur le bouton sur <a style="color: blue;" href="Base de données.html" color>cette page</a> pour obtenir les données
+                horodatées dans un tableau.
+            </p>
+        </div>
+    </section>
+</body>
+
+</html>
